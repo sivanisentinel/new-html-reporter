@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.rawgit.com/drvic10k/bootstrap-sortable/ff650fd1/Contents/bootstrap-sortable.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/drvic10k/bootstrap-sortable/ff650fd1/Scripts/bootstrap-sortable.js"></script>
+    <script src="https://cdn.rawgit.com/drvic10k/bootstrap-sortable/ff650fd1/Scripts/moment.min.js"></script>
+    <script>
+        const modal = document.getElementById('myModal');
+        const modalImage = document.getElementById('modelImage');
+
+        Array.from(document.getElementsByClassName('thumbImg')).forEach(function (el) {
+            el.onclick = function () {
+                modal.style.display = 'block';
+                modalImage.src = this.src;
+            };
+        });
+
+        document.getElementsByClassName('closeModal')[0].onclick = function () {
+            modal.style.display = 'none';
+        };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Lato');
+
+        * {
+            box-sizing: border-box;
+            max-width: 100%;
+            font-family: 'Lato', sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        .summary-panel {
+            display: flex;
+            box-sizing: border-box;
+            border-radius: 3px;
+            box-shadow: 0 2px 10px 0 rgba(192, 197, 210, .22);
+            border: 1px solid #e2e2e2;
+            margin: 15px 0;
+            padding: 10px 19px 15px;
+        }
+
+        .summary-panel-details {
+            display: flex;
+            flex-direction: column;
+            margin-right: 15px;
+            width: 500px;
+        }
+
+        .fixture-header {
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            background: linear-gradient(1.68deg, #6465a5 -1.27%, #6975a6 98.34%);
+            border-radius: 3px;
+            color: #fff;
+            -webkit-appearance: inherit;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+            height: 40px
+        }
+
+        .summary-line, .summary-line a {
+            display: flex;
+            font-size: 12px;
+            color: #1a2b59;
+        }
+
+        .fixture-header div {
+            padding-left: 33px;
+        }
+
+        .summary-line-title {
+            color: #8c94a8;
+        }
+
+        .summary-line-text {
+            margin-left: auto;
+        }
+
+        .counts {
+            width: 180px;
+            justify-content: space-between;
+            border-left: 1px solid #dfdfdf;
+            padding-left: 15px;
+        }
+
+        .red {
+            color: #F05837;
+        }
+
+        .orange {
+            color: orange;
+        }
+
+        .text-primary {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: #5047a5 !important;
+        }
+
+        .error-icon {
+            height: 20px;
+            position: absolute;
+        }
+
+        .fixture {
+            /*border: 1px solid #e2e2e2;*/
+            border-top: none;
+            border-radius: 4px;
+        }
+
+        .table {
+            border: 1px solid #e2e2e2;
+        }
+
+        tr.failed {
+            color: #F05837;
+        }
+
+        td a{
+            color: #F05837;
+        }
+        pre {
+            font-size: 12px;
+            color: #1a2b59;
+            box-sizing: border-box;
+            border-radius: 3px;
+            box-shadow: 0 2px 10px 0 rgba(192, 197, 210, .22);
+            border: 1px solid #e2e2e2;
+            margin: 15px 0;
+            padding: 10px 19px 15px
+        }
+    </style>
+    <title>Frontend Automation Report</title>
+</head>
+<body>
+<div class="tasks-summary">
+    <h1 class="text-primary">TestCafe Test Summary</h1>
+    <div class="summary-panel">
+        <div class="summary-panel-details">
+            <div class="summary-line">
+                <span class="summary-line-title">Start Time:</span>
+                <span class="summary-line-text">{{ taskStartTime }}</span>
+            </div>
+            <div class="summary-line">
+                <span class="summary-line-title">Browsers:</span>
+                <span class="summary-line-text">{{ browser }}</span>
+            </div>
+            <div class="summary-line">
+                <span class="summary-line-title">Duration:</span>
+                <span class="summary-line-text">{{ duration }}</span>
+            </div>
+            <div class="summary-line">
+                <span class="summary-line-title">Environment:</span>
+                <span class="summary-line-text"> <a href={{ serverUrl }}>{{ serverUrl }}</a></span>
+            </div>
+        </div>
+        <div class="summary-panel-details counts">
+            <div class="summary-line">
+                <span class="summary-line-title">Tests Failed:</span>
+                <span class="summary-line-text red">{{ failed }}</span>
+            </div>
+            <div class="summary-line">
+                <span class="summary-line-title">Skipped:</span>
+                <span class="summary-line-text orange">{{ skipped }}</span>
+            </div>
+            <div class="summary-line">
+                <span class="summary-line-title">Total Tests:</span>
+                <span class="summary-line-text">{{ taskTestCount }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fixtures-data accordion">
+    {{#each reportFixtursData}}
+    <div class="fixture" >
+        <div type="button" class="fixture-header" data-toggle="collapse" data-target='#toggle{{@index}}'>
+            {{#if failed}}
+            <img class="error-icon"
+                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Red_X_Freehand.svg/1024px-Red_X_Freehand.svg.png">
+            {{/if}}
+            <div>{{@index}}</div>
+            <div>{{name}}</div>
+            <div>{{path}}</div>
+
+        </div>
+        <div class="tests-data collapse" id='toggle{{@index}}' aria-expanded="false">
+            <table class="table sortable">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Test Name</th>
+                    <th>Duration</th>
+                    <th>Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each tests}}
+                <tr class="{{status}}">
+                    <td>{{@index}}</td>
+                    <td>{{testName}}</td>
+                    <td>{{duration}}</td>
+                    <td> {{#if (eq status "failed") }}<a href='#test-{{index}}'>{{status}}</a>
+                        {{else}} {{status}} {{/if}}
+                    </td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{/each}}
+</div>
+<div class="errors-data"></div>
+<h1 class="text-primary">Error Details</h1>
+{{#each errorsData}}
+<div class="summary-line-title" id='test-{{id}}'>{{fixture}} - {{name}}</div>
+{{#each screenshots}}
+<img class="thumbImg" src='data:image/png;base64, {{this}}'>
+{{/each}}
+<h4>
+    {{#each stackTrace}}
+    <pre>{{this}}</pre>
+    {{/each}}
+</h4>
+{{/each}}
+
+</body>
+</html>

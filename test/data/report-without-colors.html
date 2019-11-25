@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.rawgit.com/drvic10k/bootstrap-sortable/ff650fd1/Contents/bootstrap-sortable.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/drvic10k/bootstrap-sortable/ff650fd1/Scripts/bootstrap-sortable.js"></script>
+    <script src="https://cdn.rawgit.com/drvic10k/bootstrap-sortable/ff650fd1/Scripts/moment.min.js"></script>
+    <script>
+        const modal = document.getElementById('myModal');
+        const modalImage = document.getElementById('modelImage');
+
+        Array.from(document.getElementsByClassName('thumbImg')).forEach(function (el) {
+            el.onclick = function () {
+                modal.style.display = 'block';
+                modalImage.src = this.src;
+            };
+        });
+
+        document.getElementsByClassName('closeModal')[0].onclick = function () {
+            modal.style.display = 'none';
+        };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Lato');
+
+        * {
+            box-sizing: border-box;
+            max-width: 100%;
+            font-family: 'Lato', sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        .summary-panel {
+            display: flex;
+            box-sizing: border-box;
+            border-radius: 3px;
+            box-shadow: 0 2px 10px 0 rgba(192, 197, 210, .22);
+            border: 1px solid #e2e2e2;
+            margin: 15px 0;
+            padding: 10px 19px 15px;
+        }
+
+        .summary-panel-details {
+            display: flex;
+            flex-direction: column;
+            margin-right: 15px;
+            width: 500px;
+        }
+
+        .fixture-header {
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            background: linear-gradient(1.68deg, #6465a5 -1.27%, #6975a6 98.34%);
+            border-radius: 3px;
+            color: #fff;
+            -webkit-appearance: inherit;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+            height: 40px
+        }
+
+        .summary-line, .summary-line a {
+            display: flex;
+            font-size: 12px;
+            color: #1a2b59;
+        }
+
+        .fixture-header div {
+            padding-left: 33px;
+        }
+
+        .summary-line-title {
+            color: #8c94a8;
+        }
+
+        .summary-line-text {
+            margin-left: auto;
+        }
+
+        .counts {
+            width: 180px;
+            justify-content: space-between;
+            border-left: 1px solid #dfdfdf;
+            padding-left: 15px;
+        }
+
+        .red {
+            color: #F05837;
+        }
+
+        .orange {
+            color: orange;
+        }
+
+        .text-primary {
+            font-size: 14px;
+            text-transform: uppercase;
+            color: #5047a5 !important;
+        }
+
+        .error-icon {
+            height: 20px;
+            position: absolute;
+        }
+
+        .fixture {
+            /*border: 1px solid #e2e2e2;*/
+            border-top: none;
+            border-radius: 4px;
+        }
+
+        .table {
+            border: 1px solid #e2e2e2;
+        }
+
+        tr.failed {
+            color: #F05837;
+        }
+
+        td a{
+            color: #F05837;
+        }
+        pre {
+            font-size: 12px;
+            color: #1a2b59;
+            box-sizing: border-box;
+            border-radius: 3px;
+            box-shadow: 0 2px 10px 0 rgba(192, 197, 210, .22);
+            border: 1px solid #e2e2e2;
+            margin: 15px 0;
+            padding: 10px 19px 15px
+        }
+    </style>
+    <title>Frontend Automation Report</title>
+</head>
+<body>
+<div class="tasks-summary">
+    <h1 class="text-primary">TestCafe Test Summary</h1>
+    <div class="summary-panel">
+        <div class="summary-panel-details">
+            <div class="summary-line">
+                <span class="summary-line-title">Start Time:</span>
+                <span class="summary-line-text">Thu Jan 01 1970 02:00:00 GMT+0200 (Israel Standard Time)</span>
+            </div>
+            <div class="summary-line">
+                <span class="summary-line-title">Browsers:</span>
+                <span class="summary-line-text">Chrome 41.0.2227 / Mac OS X 10.10.1, Firefox 47 / Mac OS X 10.10.1</span>
+            </div>
+            <div class="summary-line">
+                <span class="summary-line-title">Duration:</span>
+                <span class="summary-line-text">0s</span>
+            </div>
+            <div class="summary-line">
+                <span class="summary-line-title">Environment:</span>
+                <span class="summary-line-text"> <a href=></a></span>
+            </div>
+        </div>
+        <div class="summary-panel-details counts">
+            <div class="summary-line">
+                <span class="summary-line-title">Tests Failed:</span>
+                <span class="summary-line-text red">2</span>
+            </div>
+            <div class="summary-line">
+                <span class="summary-line-title">Skipped:</span>
+                <span class="summary-line-text orange">0</span>
+            </div>
+            <div class="summary-line">
+                <span class="summary-line-title">Total Tests:</span>
+                <span class="summary-line-text">7</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fixtures-data accordion">
+    <div class="fixture" >
+        <div type="button" class="fixture-header" data-toggle="collapse" data-target='#toggle0'>
+            <img class="error-icon"
+                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Red_X_Freehand.svg/1024px-Red_X_Freehand.svg.png">
+            <div>0</div>
+            <div>First fixture</div>
+            <div>./fixture1.js</div>
+
+        </div>
+        <div class="tests-data collapse" id='toggle0' aria-expanded="false">
+            <table class="table sortable">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Test Name</th>
+                    <th>Duration</th>
+                    <th>Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="passed">
+                    <td>0</td>
+                    <td>First test in first fixture</td>
+                    <td>1m 14s</td>
+                    <td>  passed
+                    </td>
+                </tr>
+                <tr class="failed">
+                    <td>1</td>
+                    <td>Second test in first fixture</td>
+                    <td>1m 14s</td>
+                    <td> <a href='#test-2'>failed</a>
+
+                    </td>
+                </tr>
+                <tr class="passed">
+                    <td>2</td>
+                    <td>Third test in first fixture</td>
+                    <td>1m 14s</td>
+                    <td>  passed
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="fixture" >
+        <div type="button" class="fixture-header" data-toggle="collapse" data-target='#toggle1'>
+            <div>1</div>
+            <div>Second fixture</div>
+            <div>./fixture2.js</div>
+
+        </div>
+        <div class="tests-data collapse" id='toggle1' aria-expanded="false">
+            <table class="table sortable">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Test Name</th>
+                    <th>Duration</th>
+                    <th>Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="passed">
+                    <td>0</td>
+                    <td>First test in second fixture</td>
+                    <td>1m 14s</td>
+                    <td>  passed
+                    </td>
+                </tr>
+                <tr class="passed">
+                    <td>1</td>
+                    <td>Second test in second fixture</td>
+                    <td>1m 14s</td>
+                    <td>  passed
+                    </td>
+                </tr>
+                <tr class="passed">
+                    <td>2</td>
+                    <td>Third test in second fixture</td>
+                    <td>0s</td>
+                    <td>  passed
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="fixture" >
+        <div type="button" class="fixture-header" data-toggle="collapse" data-target='#toggle2'>
+            <img class="error-icon"
+                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Red_X_Freehand.svg/1024px-Red_X_Freehand.svg.png">
+            <div>2</div>
+            <div>Third fixture</div>
+            <div>./fixture3.js</div>
+
+        </div>
+        <div class="tests-data collapse" id='toggle2' aria-expanded="false">
+            <table class="table sortable">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Test Name</th>
+                    <th>Duration</th>
+                    <th>Result</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="failed">
+                    <td>0</td>
+                    <td>First test in third fixture</td>
+                    <td>1m 14s</td>
+                    <td> <a href='#test-7'>failed</a>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="errors-data"></div>
+<h1 class="text-primary">Error Details</h1>
+<div class="summary-line-title" id='test-2'>First fixture - Second test in first fixture</div>
+<h4>
+    <pre>undefinedA JavaScript error occurred on &quot;http://example.org&quot;.
+Repeat test actions in the browser and check the console for errors.
+If you see this error, it means that the tested website caused it. You can fix it or disable tracking JavaScript errors in TestCafe. To do the latter, enable the &quot;--skip-js-errors&quot; option.
+If this error does not occur, please write a new issue at:
+&quot;https://github.com/DevExpress/testcafe/issues/new?template&#x3D;bug-report.md&quot;.
+
+JavaScript error details:
+Some error
+
+Browser: Chrome 41.0.2227 / Mac OS X 10.10.1
+Screenshot: /screenshots/1445437598847/errors
+
+   1 |var createCallsiteRecord &#x3D; require(&#x27;callsite-record&#x27;);
+   2 |
+   3 |function someFunc () {
+ &gt; 4 |    throw new Error(&#x27;Hey ya!&#x27;);
+   5 |}
+   6 |
+   7 |try {
+   8 |    someFunc();
+   9 |}
+
+   at someFunc (/Users/sivani/dev/new-html-reporter-2/test/utils/test-callsite.js:4:11)
+   at Object.&lt;anonymous&gt; (/Users/sivani/dev/new-html-reporter-2/test/utils/test-callsite.js:8:5)
+   at Object.&lt;anonymous&gt; (/Users/sivani/dev/new-html-reporter-2/test/utils/reporter-test-calls.js:4:38)</pre>
+    <pre>undefinedThe specified selector does not match any element in the DOM tree.
+
+   | one
+ &gt; |   two
+   |   three
+
+Browser: Firefox 47 / Mac OS X 10.10.1
+
+   1 |var createCallsiteRecord &#x3D; require(&#x27;callsite-record&#x27;);
+   2 |
+   3 |function someFunc () {
+ &gt; 4 |    throw new Error(&#x27;Hey ya!&#x27;);
+   5 |}
+   6 |
+   7 |try {
+   8 |    someFunc();
+   9 |}
+
+   at someFunc (/Users/sivani/dev/new-html-reporter-2/test/utils/test-callsite.js:4:11)
+   at Object.&lt;anonymous&gt; (/Users/sivani/dev/new-html-reporter-2/test/utils/test-callsite.js:8:5)
+   at Object.&lt;anonymous&gt; (/Users/sivani/dev/new-html-reporter-2/test/utils/reporter-test-calls.js:4:38)</pre>
+</h4>
+<div class="summary-line-title" id='test-7'>Third fixture - First test in third fixture</div>
+<h4>
+    <pre>undefinedThe specified selector does not match any element in the DOM tree.
+
+   | one
+ &gt; |   two
+   |   three
+
+Browser: Firefox 47 / Mac OS X 10.10.1
+
+   1 |var createCallsiteRecord &#x3D; require(&#x27;callsite-record&#x27;);
+   2 |
+   3 |function someFunc () {
+ &gt; 4 |    throw new Error(&#x27;Hey ya!&#x27;);
+   5 |}
+   6 |
+   7 |try {
+   8 |    someFunc();
+   9 |}
+
+   at someFunc (/Users/sivani/dev/new-html-reporter-2/test/utils/test-callsite.js:4:11)
+   at Object.&lt;anonymous&gt; (/Users/sivani/dev/new-html-reporter-2/test/utils/test-callsite.js:8:5)
+   at Object.&lt;anonymous&gt; (/Users/sivani/dev/new-html-reporter-2/test/utils/reporter-test-calls.js:4:38)</pre>
+</h4>
+
+</body>
+</html>
