@@ -18,7 +18,7 @@ npm install testcafe-reporter-new-html-reporter
 When you run tests from the command line, specify the reporter name by using the `--reporter` option:
 
 ```
-testcafe chrome 'path/to/test/file.js' --reporter new-html-reporter
+testcafe chrome 'path/to/test/file.js' --reporter testcafe-reporter-new-html-reporter
 ```
 
 

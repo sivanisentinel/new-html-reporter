@@ -104,13 +104,13 @@ module.exports = function () {
         reportTaskDone ( endTime/*, passed, warnings*/) {
 
             this.summaryData.duration = this.moment.duration(endTime - this.summaryData.startTime).format('h[h] mm[m] ss[s]');
-            const source = fs.readFileSync('src/report-template.html', 'utf8').toString();
+            const source = fs.readFileSync('lib/report-template.html', 'utf8').toString();
             const template = Handlebars.compile(source);
             const output = template(this.summaryData);
 
-            fs.writeFile('generated-report.html', output, function () {
-                console.log('Saved!');
-            });
+            // fs.writeFile('generated-report.html', output, function () {
+            //     console.log('Saved!');
+            // });
 
             this.write(output);
         }
