@@ -1,6 +1,6 @@
 {
   "name": "testcafe-reporter-new-html-reporter",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "new-html-reporter TestCafe reporter plugin.",
   "repository": "https://github.com/sivanisentinel/testcafe-reporter-new-html-reporter",
   "author": {
@@ -12,7 +12,8 @@
     "lib"
   ],
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "publish": "gulp preview && npm publish"
   },
   "keywords": [
     "testcafe",

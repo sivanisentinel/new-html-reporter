@@ -1,6 +1,8 @@
 //file scan for screenshots
 const fs = require('fs');
 const Handlebars = require('handlebars');
+const dirPath = require('path');
+
 
 Handlebars.registerHelper('eq', function (string1, string2) {
     return string1 === string2;
@@ -104,7 +106,8 @@ module.exports = function () {
         reportTaskDone ( endTime/*, passed, warnings*/) {
 
             this.summaryData.duration = this.moment.duration(endTime - this.summaryData.startTime).format('h[h] mm[m] ss[s]');
-            const source = fs.readFileSync('lib/report-template.html', 'utf8').toString();
+            var templatePath = dirPath.join(__dirname, 'report-template.html');
+            const source = fs.readFileSync(templatePath, 'utf8').toString();
             const template = Handlebars.compile(source);
             const output = template(this.summaryData);
 
